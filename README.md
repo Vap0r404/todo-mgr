@@ -1,9 +1,9 @@
 # To-Do List Manager (todo-mgr)
 
-A lightweight command-line To-Do List Manager built with Python, designed to help you easily manage your tasks.
+A lightweight To-Do List Manager built with Python, designed to help you easily manage your tasks.
 
 ## Features
-- Add new tasks with a simple command-line interface.
+- Add new tasks with a simple GUI.
 - View all current tasks in a neatly organized list.
 - Remove completed or unnecessary tasks.
 - Save and persist tasks between sessions.
