@@ -27,12 +27,12 @@ category_var.trace("w", on_category_change)
 category_menu = OptionMenu(root, category_var, *categories)
 category_menu.pack()
 
-# Task listbox
-task_listbox = Listbox(root)
+# Task listbox with increased width
+task_listbox = Listbox(root, width=50)  # Adjust width as needed
 task_listbox.pack()
 
-# Task entry
-task_entry = Entry(root)
+# Task entry with increased width
+task_entry = Entry(root, width=50)  # Adjust width as needed
 task_entry.pack()
 
 # Update the task listbox with tasks
