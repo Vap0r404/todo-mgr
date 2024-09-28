@@ -1,14 +1,18 @@
-# To-Do List Manager (todo-mgr)
+# **todo-mgr 2.1 - Release Notes**
+**Release Date: September 28, 2024**
 
-A lightweight To-Do List Manager built with Python, designed to help you easily manage your tasks.
+### **New Features:**
+**Task Categorization:**
+- Introduced the ability to organize tasks into four categories: Casual, Work, Personal, and School. This allows for better task management and filtering.
 
-## Features
-- Add new tasks with a simple GUI.
-- View all current tasks in a neatly organized list.
-- Remove completed or unnecessary tasks.
-- Save and persist tasks between sessions.
+**Category Selection Dropdown:**
+- Added a dropdown menu for easy selection of task categories. Tasks are automatically loaded based on the selected category, enhancing the user experience.
 
-## Usage
-- Make sure you have [Python](https://www.python.org/downloads/) installed.
-- Clone this repository to your preferred directory or download the ZIP and extract it.
-- Run todo.py
+**Improved GUI Layout:**
+- Increased the layout of task entry and task list boxes for better usability.
+
+### **Bug Fixes:**
+- Implemented error handling for task removal to prevent crashes when no task is selected.
+
+### **Future Plans:**
+- Potential implementation of task deadlines and reminders.
