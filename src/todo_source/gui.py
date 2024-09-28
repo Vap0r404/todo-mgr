@@ -4,7 +4,7 @@ from .task_manager import TaskManager
 # Initialize the main Tkinter window
 root = Tk()
 root.title("todo-mgr")
-root.geometry("400x400")
+root.geometry("400x300")
 
 # Task Manager Initialization
 task_manager = None
