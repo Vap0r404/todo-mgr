@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from .task_manager import TaskManager
+from .task_manager import TaskManager  # Using relative import
 
 # Initialize the task manager with file persistence
 manager = TaskManager()
