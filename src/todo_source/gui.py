@@ -4,7 +4,7 @@ from .task_manager import TaskManager
 # Initialize the main Tkinter window
 root = Tk()
 root.title("todo-mgr")
-root.geometry("400x450")
+root.geometry("400x350")
 
 # Task Manager Initialization
 task_manager = None
@@ -27,15 +27,15 @@ category_menu = OptionMenu(root, category_var, *categories)
 category_menu.pack()
 
 # Task listbox
-task_listbox = Listbox(root)
+task_listbox = Listbox(root, width=50)
 task_listbox.pack()
 
 # Task entry
-task_entry = Entry(root)
+task_entry = Entry(root, width=50)
 task_entry.pack()
 
 # Deadline entry
-deadline_label = Label(root, text="Deadline (optional, format: YYYY-MM-DD):")
+deadline_label = Label(root, text="Deadline (optional):", width=50)
 deadline_label.pack()
 deadline_entry = Entry(root)
 deadline_entry.pack()
