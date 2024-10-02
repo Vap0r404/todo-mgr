@@ -1,32 +1,29 @@
 class TaskManager:
-    def __init__(self, file_path="tasks.txt"):
+    def __init__(self, category="default"):
+        self.category = category
+        self.filename = f"tasks_{self.category}.txt"
         self.tasks = []
-        self.file_path = file_path
-        self.load_tasks()  # Load tasks from file when initializing
 
-    def add_task(self, task):
-        self.tasks.append(task)
-        self.save_tasks()  # Save tasks after adding
+    def load_tasks(self):
+        """Load tasks and deadlines from the file."""
+        try:
+            with open(self.filename, "r") as file:
+                self.tasks = [tuple(line.strip().split(" | ")) for line in file.readlines()]  # Store tasks as (task, deadline)
+        except FileNotFoundError:
+            self.tasks = []
+
+    def save_tasks(self):
+        """Save tasks and deadlines to the file."""
+        with open(self.filename, "w") as file:
+            for task, deadline in self.tasks:
+                file.write(f"{task} | {deadline}\n")
+
+    def add_task(self, task, deadline="No deadline"):
+        """Add a task with an optional deadline."""
+        self.tasks.append((task, deadline))
+        self.save_tasks()
 
     def remove_task(self, task):
-        if task in self.tasks:
-            self.tasks.remove(task)
-            self.save_tasks()  # Save tasks after removing
-
-    def get_tasks(self):
-        return self.tasks
-
-    # Save tasks to a file
-    def save_tasks(self):
-        with open(self.file_path, "w") as file:
-            for task in self.tasks:
-                file.write(task + "\n")
-
-    # Load tasks from a file
-    def load_tasks(self):
-        try:
-            with open(self.file_path, "r") as file:
-                self.tasks = [line.strip() for line in file.readlines()]
-        except FileNotFoundError:
-            # If the file doesn't exist, start with an empty list
-            self.tasks = []
+        """Remove a task and save."""
+        self.tasks = [t for t in self.tasks if t[0] != task]
+        self.save_tasks()
