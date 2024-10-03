@@ -3,7 +3,7 @@ from .task_manager import TaskManager
 
 root = Tk()
 root.title("todo-mgr")
-root.geometry("400x350")
+root.geometry("400x400")
 
 task_manager = None
 
@@ -33,10 +33,19 @@ deadline_label.pack()
 deadline_entry = Entry(root)
 deadline_entry.pack()
 
+priority_var = StringVar(root)
+priority_var.set("Low")
+priorities = ["Low", "Medium", "High"]
+
+priority_label = Label(root, text="Priority:", width=50)
+priority_label.pack()
+priority_menu = OptionMenu(root, priority_var, *priorities)
+priority_menu.pack()
+
 def update_task_listbox(tasks):
     task_listbox.delete(0, 'end')
-    for task, deadline in tasks:
-        task_listbox.insert('end', f"{task} (Due: {deadline})")
+    for task, deadline, priority in tasks:
+        task_listbox.insert('end', f"{task} (Due: {deadline}, Priority: {priority})")
 
 task_manager = TaskManager(category_var.get())
 task_manager.load_tasks()
@@ -45,8 +54,9 @@ update_task_listbox(task_manager.tasks)
 def add_task():
     task = task_entry.get()
     deadline = deadline_entry.get() or "No deadline"
+    priority = priority_var.get()
     if task:
-        task_manager.add_task(task, deadline)
+        task_manager.add_task(task, deadline, priority)
         update_task_listbox(task_manager.tasks)
         task_entry.delete(0, 'end')
         deadline_entry.delete(0, 'end')
@@ -67,13 +77,15 @@ remove_task_button.pack()
 
 sort_var = StringVar(root)
 sort_var.set("Sort by Name")
-sort_options = ["Sort by Name", "Sort by Deadline"]
+sort_options = ["Sort by Name", "Sort by Deadline", "Sort by Priority"]
 
 def on_sort_change(*args):
     if sort_var.get() == "Sort by Name":
         task_manager.sort_tasks_by_name()
-    else:
+    elif sort_var.get() == "Sort by Deadline":
         task_manager.sort_tasks_by_deadline()
+    else:
+        task_manager.sort_tasks_by_priority()
     update_task_listbox(task_manager.tasks)
 
 sort_var.trace("w", on_sort_change)
