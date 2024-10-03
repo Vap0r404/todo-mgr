@@ -3,7 +3,7 @@ from .task_manager import TaskManager
 
 root = Tk()
 root.title("todo-mgr")
-root.geometry("400x350")
+root.geometry("400x400")
 
 task_manager = None
 
