@@ -3,7 +3,7 @@ from .task_manager import TaskManager
 
 root = Tk()
 root.title("todo-mgr")
-root.geometry("400x400")
+root.geometry("400x350")
 
 task_manager = None
 
@@ -33,19 +33,10 @@ deadline_label.pack()
 deadline_entry = Entry(root)
 deadline_entry.pack()
 
-priority_var = StringVar(root)
-priority_var.set("Low")
-priorities = ["Low", "Medium", "High"]
-
-priority_label = Label(root, text="Priority:", width=50)
-priority_label.pack()
-priority_menu = OptionMenu(root, priority_var, *priorities)
-priority_menu.pack()
-
 def update_task_listbox(tasks):
     task_listbox.delete(0, 'end')
-    for task, deadline, priority in tasks:
-        task_listbox.insert('end', f"{task} (Due: {deadline}, Priority: {priority})")
+    for task, deadline in tasks:
+        task_listbox.insert('end', f"{task} (Due: {deadline})")
 
 task_manager = TaskManager(category_var.get())
 task_manager.load_tasks()
@@ -54,9 +45,8 @@ update_task_listbox(task_manager.tasks)
 def add_task():
     task = task_entry.get()
     deadline = deadline_entry.get() or "No deadline"
-    priority = priority_var.get()
     if task:
-        task_manager.add_task(task, deadline, priority)
+        task_manager.add_task(task, deadline)
         update_task_listbox(task_manager.tasks)
         task_entry.delete(0, 'end')
         deadline_entry.delete(0, 'end')
@@ -75,17 +65,53 @@ def remove_task():
 remove_task_button = Button(root, text="Remove Task", command=remove_task)
 remove_task_button.pack()
 
+def edit_task():
+    try:
+        selected_task = task_listbox.get(task_listbox.curselection()).split(" (Due: ")[0]
+        for task, deadline in task_manager.tasks:
+            if task == selected_task:
+                task_entry.delete(0, 'end')
+                task_entry.insert(0, task)
+                deadline_entry.delete(0, 'end')
+                deadline_entry.insert(0, deadline)
+                break
+    except:
+        pass
+
+edit_task_button = Button(root, text="Edit Task", command=edit_task)
+edit_task_button.pack()
+
+def update_task():
+    try:
+        selected_index = task_listbox.curselection()
+        if not selected_index:
+            return
+        
+        selected_task = task_listbox.get(selected_index).split(" (Due: ")[0]
+        new_task = task_entry.get()
+        new_deadline = deadline_entry.get() or "No deadline"
+        
+        if new_task:
+            task_manager.remove_task(selected_task)
+            task_manager.add_task(new_task, new_deadline)
+            update_task_listbox(task_manager.tasks)
+            task_entry.delete(0, 'end')
+            deadline_entry.delete(0, 'end')
+    except Exception as e:
+        print(e)
+
+update_task_button = Button(root, text="Update Task", command=update_task)
+update_task_button.pack()
+
 sort_var = StringVar(root)
 sort_var.set("Sort by Name")
-sort_options = ["Sort by Name", "Sort by Deadline", "Sort by Priority"]
+sort_options = ["Sort by Name", "Sort by Deadline"]
 
 def on_sort_change(*args):
     if sort_var.get() == "Sort by Name":
         task_manager.sort_tasks_by_name()
-    elif sort_var.get() == "Sort by Deadline":
-        task_manager.sort_tasks_by_deadline()
     else:
-        task_manager.sort_tasks_by_priority()
+        task_manager.sort_tasks_by_deadline()
     update_task_listbox(task_manager.tasks)
 
 sort_var.trace("w", on_sort_change)
