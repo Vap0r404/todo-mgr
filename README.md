@@ -1,4 +1,4 @@
-# To-Do List Manager (todo-mgr)
+# todo-mgr
 
 A lightweight To-Do List Manager built with Python, designed to help you easily manage your tasks.
 
