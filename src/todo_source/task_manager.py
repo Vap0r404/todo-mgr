@@ -7,17 +7,20 @@ class TaskManager:
     def load_tasks(self):
         try:
             with open(self.filename, "r") as file:
-                self.tasks = [tuple(line.strip().split(" | ")) for line in file.readlines()]
+                for line in file.readlines():
+                    parts = line.strip().split(" | ")
+                    if len(parts) == 2:  # Ensure there are exactly two parts
+                        self.tasks.append(tuple(parts))
         except FileNotFoundError:
             self.tasks = []
 
     def save_tasks(self):
         with open(self.filename, "w") as file:
-            for task, deadline, priority in self.tasks:
-                file.write(f"{task} | {deadline} | {priority}\n")
+            for task, deadline in self.tasks:
+                file.write(f"{task} | {deadline}\n")
 
-    def add_task(self, task, deadline="No deadline", priority="Low"):
-        self.tasks.append((task, deadline, priority))
+    def add_task(self, task, deadline="No deadline"):
+        self.tasks.append((task, deadline))
         self.save_tasks()
 
     def remove_task(self, task):
