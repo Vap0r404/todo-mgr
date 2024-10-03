@@ -1,5 +1,4 @@
-from todo_source.gui import root  # Import the Tkinter root from gui.py
+from todo_source.gui import root
 
 if __name__ == "__main__":
-    # Start the Tkinter main loop
     root.mainloop()
