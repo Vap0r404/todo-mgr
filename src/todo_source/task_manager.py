@@ -13,11 +13,11 @@ class TaskManager:
 
     def save_tasks(self):
         with open(self.filename, "w") as file:
-            for task, deadline in self.tasks:
-                file.write(f"{task} | {deadline}\n")
+            for task, deadline, priority in self.tasks:
+                file.write(f"{task} | {deadline} | {priority}\n")
 
-    def add_task(self, task, deadline="No deadline"):
-        self.tasks.append((task, deadline))
+    def add_task(self, task, deadline="No deadline", priority="Low"):
+        self.tasks.append((task, deadline, priority))
         self.save_tasks()
 
     def remove_task(self, task):
@@ -29,3 +29,7 @@ class TaskManager:
 
     def sort_tasks_by_deadline(self):
         self.tasks.sort(key=lambda x: x[1] if x[1] != "No deadline" else "")
+
+    def sort_tasks_by_priority(self):
+        priority_order = {"Low": 1, "Medium": 2, "High": 3}
+        self.tasks.sort(key=lambda x: priority_order[x[2]])
