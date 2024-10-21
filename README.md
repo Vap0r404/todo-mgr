@@ -14,3 +14,6 @@ A lightweight To-Do List Manager built with Python, designed to help you easily 
 - Make sure you have [Python](https://www.python.org/downloads/) installed.
 - Clone this repository to your preferred directory or download the ZIP and extract it.
 - Run todo.py
+
+## NOTICE
+- todo-mgr is already finished. 2.4 is its latest and final version, and if you want, you can fork this repo and continue development. Thanks and good luck!
